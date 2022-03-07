@@ -309,15 +309,6 @@ botonesAgregar.forEach((boton, indice) => {
         }
         arrayProductos=[cantidadTipo1, cantidadTipo2, cantidadTipo3, cantidadTipo4, cantidadTipo5, cantidadTipo6, cantidadTipo7, cantidadTipo8, cantidadTipo9];
         localStorage.setItem('ProductosTipo', JSON.stringify(arrayProductos));
-        console.log(cantidadTipo1.cantidad);
-        console.log(cantidadTipo2.cantidad);
-        console.log(cantidadTipo3.cantidad);
-        console.log(cantidadTipo4.cantidad);
-        console.log(cantidadTipo5.cantidad);
-        console.log(cantidadTipo6.cantidad);
-        console.log(cantidadTipo7.cantidad);
-        console.log(cantidadTipo8.cantidad);
-        console.log(cantidadTipo9.cantidad);
         mostrar.value=contador;
         
     });
@@ -365,15 +356,6 @@ botonesQuitar.forEach((boton, indice) => {
                 }
                 arrayProductos=[cantidadTipo1, cantidadTipo2, cantidadTipo3, cantidadTipo4, cantidadTipo5, cantidadTipo6, cantidadTipo7, cantidadTipo8, cantidadTipo9];
                 localStorage.setItem('ProductosTipo', JSON.stringify(arrayProductos));
-                console.log(cantidadTipo1.cantidad);
-                console.log(cantidadTipo2.cantidad);
-                console.log(cantidadTipo3.cantidad);
-                console.log(cantidadTipo4.cantidad);
-                console.log(cantidadTipo5.cantidad);
-                console.log(cantidadTipo6.cantidad);
-                console.log(cantidadTipo7.cantidad);
-                console.log(cantidadTipo8.cantidad);
-                console.log(cantidadTipo9.cantidad);
             }
         }
     });

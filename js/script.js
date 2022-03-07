@@ -472,8 +472,10 @@ function recibo(){
     `;
     pagar.forEach(valor=>{
         valorTotal += valor;
-        totalText.innerHTML+= `
-        <h3 class="text-center">$${valor}</h2>`;
+        if(valor>0){
+            totalText.innerHTML+= `
+            <h2 class="text-center">$${valor}</h2>`;
+        }
     });
     totalText.innerHTML+= `
         <hr>

@@ -4,9 +4,8 @@ body{
 .contenedor{
     background-color: black;
     color: white;
-    margin-top:30px;
     margin-bottom: 30px;
-    padding-top: 30px;
+    /* padding-top: 30px; */
     padding-bottom: 30px;
 }
 .titulo{
@@ -20,4 +19,27 @@ body{
 
 .secundario{
     margin-left: 200px;
+}
+.cuenta1 span{
+    margin-left: 120px;
+}
+.cuenta2 span{
+    margin-left: 185px;
+}
+
+.cuenta3 span{
+    margin-left: 173px;
+}
+
+.cuenta4 span{
+    margin-left: 190px;
+}
+.cuenta5 span{
+    margin-left: 205px;
+}
+.cuenta6 span{
+    margin-left: 214px;
+}
+.cuenta7 span{
+    margin-left: 210px;
 }

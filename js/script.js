@@ -1,9 +1,13 @@
+var html = document.documentElement; // Chrome, Firefox, IE and Opera places the overflow at the <html> level, unless else is specified. Therefore, we use the documentElement property for these browsers
+html.scrollTop = 0;
+
 let h_home= document.getElementById("h_home");
 let h_pelicula= document.getElementById("h_pelicula");
 let h_tienda= document.getElementById("h_tienda");
 let h_cuenta= document.getElementById("h_cuenta");
 let titulo2= document.getElementById("titulo2");
 h_home.style.color ="white";
+
 class Pelicula{
     constructor(nombre, duracion, categoria, url){
         this.nombre = nombre;
@@ -71,6 +75,7 @@ let siguiente2 = document.getElementById("continuar2");
 let volver = document.getElementById("volver");
 let volver2 = document.getElementById("volver2");
 let volver3 = document.getElementById("volver3");
+let pagarBoton = document.getElementById("pagar");
 let comidaText = document.getElementById("comida");
 let titulo = document.getElementById("titulo");
 let iniciar = document.getElementById("iniciar");
@@ -82,6 +87,7 @@ let pagar=[];
 
 siguiente.classList.add("visually-hidden");
 siguiente2.classList.add("visually-hidden");
+pagarBoton.classList.add("visually-hidden");
 volver.classList.add("visually-hidden");
 volver2.classList.add("visually-hidden");
 volver3.classList.add("visually-hidden");
@@ -245,13 +251,13 @@ function validarTipo(){
 function tipoPelicula(valor){
     switch(valor){
         case 1:
-            lista.push(pelicula1.nombre);
+            lista[0]=(pelicula1.nombre);
             break;
         case 2:
-            lista.push(pelicula2.nombre);
+            lista[0]=(pelicula2.nombre);
             break;
         case 3:
-            lista.push(pelicula3.nombre);
+            lista[0]=(pelicula3.nombre);
             break;
     }
 }
@@ -259,15 +265,15 @@ function tipoPelicula(valor){
 function tipoBoletas(valor){
     switch(valor){
         case 1:
-            lista.push("Economico");
+            lista[1]=("Economico");
             pagar[0]=50000*cantidad;
             break;
         case 2:
-            lista.push("Normal");
+            lista[1]=("Normal");
             pagar[0]=70000*cantidad;
             break;
         case 3:
-            lista.push("VIP");
+            lista[1]=("VIP");
             pagar[0]=100000*cantidad;
             break;
     }
@@ -481,6 +487,7 @@ siguiente2.addEventListener('click',()=>{
     comidaText.classList.add("visually-hidden");
     titulo2.classList.add("visually-hidden");
     volver3.classList.remove("visually-hidden");
+    pagarBoton.classList.remove("visually-hidden");
     volver2.classList.add("visually-hidden");
     combosComida();
     recibo();
@@ -570,6 +577,7 @@ volver3.addEventListener('click',()=>{
     h_cuenta.style.color ="#0d6efd";
     h_tienda.style.color ="white";
     siguiente2.classList.remove("visually-hidden");
+    pagarBoton.classList.add("visually-hidden");
     comidaText.classList.remove("visually-hidden");
     titulo2.classList.remove("visually-hidden");
     volver2.classList.remove("visually-hidden");
@@ -595,4 +603,8 @@ volver.addEventListener('click',()=>{
     peliculas.classList.add("visually-hidden");
     volver.classList.add("visually-hidden");
     usuario.classList.remove("visually-hidden");
+})
+
+pagarBoton.addEventListener('click',()=>{
+    swal("Gracias por su compra!", "Podras reclamar tu pedido con el numero de identificación en nuestros puntos fisicos", "success");
 })

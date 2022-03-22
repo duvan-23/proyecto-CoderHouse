@@ -23,6 +23,12 @@ body{
 .cuenta1 span{
     margin-left: 152px;
 }
+.cuenta1a span{
+    margin-left: 119px;
+}
+.cuenta1b span{
+    margin-left: 188px;
+}
 .cuenta2 span{
     margin-left: 185px;
 }
@@ -42,4 +48,84 @@ body{
 }
 .cuenta7 span{
     margin-left: 210px;
+}
+
+
+img.img-thumbnail{
+    width: 60%;
+    height: 60%;
+}
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  [type=radio]+img {
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+
+  [type=radio]:checked + img {
+    outline: 5px solid orange;
+  }
+img.img-thumbnail2{
+    width: 170px;
+    height: 100px;
+    border: 1px solid white;
+}
+.nombre{
+    font-size:medium;
+    margin-right: 36px;
+    padding-top: 1px;
+}
+img.asiento{
+    width: 300px;
+    height: 180px;
+    position:absolute;
+    left: 578px;
+    border-radius: 15px;
+}
+
+.entradas{
+    position: relative; 
+    width: 60px;
+    margin-top: 80px;
+    border-radius: 7px;
+}
+.quitar_asientos{
+    margin-left: 364px;
+    margin-top: -90px;
+    border-color: red;
+    border-radius: 10px;
+}
+.agregar_asientos{
+    margin-left: 136px;
+    margin-top: -90px;
+    border-color:aqua;
+    border-radius: 10px;
+}
+
+.agregar_asientos img{
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.quitar_asientos img{
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+}
+.agregar_asientos:hover{
+    border-width: 3px;
+}
+
+.quitar_asientos:hover{
+    border-width: 3px;
+}
+.negativo{
+    margin-top: -20px;
+}
+.negativo2{
+    margin-top: -85px;
 }

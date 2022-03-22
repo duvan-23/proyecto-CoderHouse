@@ -15,46 +15,42 @@
 <body>
     <div class="container-fluid contenedor">
         <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="col-auto col-md-2 col-xl-1 px-sm-1 px-0 bg-dark ">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         <li class="nav-item">
-                            <div href="#" class="nav-link align-middle px-0" id="h_home">
+                            <div href="#" class="nav-link align-middle px-0 mb-5 ps-2" id="h_home" style="width: 90px;">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                             </div>
                         </li>
                         <li>
-                            <div href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle" id="h_pelicula">
+                            <div data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-5 ps-2" id="h_pelicula"  style="width: 90px;">
                                 <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Peliculas</span> </div>
                         </li>
                         <li>
-                            <div href="#" class="nav-link px-0 align-middle " id="h_tienda" >
+                            <div data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-5 ps-2" id="h_boletos"  style="width: 90px;">
+                                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Boletos</span> </div>
+                        </li>
+                        <li>
+                            <div class="nav-link px-0 align-middle mb-5  ps-2" id="h_tienda"   style="width: 90px;">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Tienda</span></div>
                         </li>
                         <li>
-                            <div href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle " id="h_cuenta">
+                            <div data-bs-toggle="collapse" class="nav-link px-0 align-middle  mb-5 ps-2" id="h_cuenta"  style="width: 90px;">
                                 <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Cuenta</span></div>
                         </li>
                     </ul>
                     <hr>
-                    <div class="dropdown pb-4">
+                    <div class="pb-4">
                         <div class="d-flex align-items-center text-white text-decoration-none " aria-expanded="false">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuDoisN_XW3IVsEn4qXXTiqfTFBCCQOWqDFg&usqp=CAU" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1 " id="titulo"></span>
+                            <img src="https://st2.depositphotos.com/3236579/47565/v/600/depositphotos_475656306-stock-illustration-isolated-pop-corn-icon-cinema.jpg" alt="hugenerd" width="60" height="60"  class="rounded-circle">
+                            
                         </div>
-                        <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
-                        </ul> -->
                     </div>
                 </div>
             </div>
-            <div class="col py-3">
+            <div class="col py-3 pt-1">
+                <div class="col-12 text-end"id="titulo"></div>
                 <div class="titulo mb-3 justify-content-center" id="titulo2">
                     <h1 class="principal">Cine CODERHOUSE</h1>      
                 </div>
@@ -81,13 +77,25 @@
                     </div>
                 </div>
                 <div id="peliculas" class="row"></div>
-                
-                <div id="opciones" class="row text-start justify-content-around visually-hidden">
-                    <div class="col-5 order-2">
-                        <h4 class="mb-3">¿Cuantos boletos desea?</h4>
+                <div id="opciones" class="row text-start visually-hidden ">
+                    <div class="col-12 order-2 text-center">
+                        <h4 class="mb-3 mt-4 ">¿Cuantos boletos desea?</h4>
                         <div class="mb-3">
-                            <input class="m-3" type="number" id="cantidad" min="1" value="1" autocomplete="off" required>
+                            <img src="https://www.irishtimes.com/polopoly_fs/1.3445043.1522359625!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg" alt="" class="asiento">
+                            <input class="entradas" type="number" id="cantidad" min="1" value="1" autocomplete="off" required>
                         </div>
+                    </div>
+                </div>
+                <div class="row mb-0">
+                    <div class="col">
+                        <button class="btn quitar_asientos visually-hidden" id="quitarAsientos">
+                            <img src="data:image/jpeg;base64,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" alt="">
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="btn agregar_asientos visually-hidden" id="agregarAsientos">
+                            <img src="https://media.istockphoto.com/photos/traffic-controller-picture-id178874462?k=20&m=178874462&s=612x612&w=0&h=Bc14W9vbjuHT6s2eTY8wSllJc3A82PRMOlMEUpbmKws=" alt="">
+                        </button>
                     </div>
                 </div>
                 <div id="comida" class="row text-start justify-content-around"></div>
@@ -116,6 +124,15 @@
                     </div>        
                     <div class="col d-flex flex-row-reverse me-5 mb-4">
                             <button class="btn btn-info visually-hidden" id="continuar2">Siguiente</button>
+                    </div>
+                </div>
+                <div class="row " id="siguiente3">  
+                    <div id="alerta2"></div> 
+                    <div class="col d-flex flex-row ms-5 mb-4 negativo">
+                        <button class="btn btn-danger visually-hidden" id="volver4">Volver</button>
+                    </div>        
+                    <div class="col d-flex flex-row-reverse me-5 mb-4 negativo">
+                            <button class="btn btn-info visually-hidden" id="continuar3">Siguiente</button>
                     </div>
                 </div>
             </div>

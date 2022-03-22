@@ -1,12 +1,69 @@
 var html = document.documentElement; // Chrome, Firefox, IE and Opera places the overflow at the <html> level, unless else is specified. Therefore, we use the documentElement property for these browsers
 html.scrollTop = 0;
+let peliculas = document.getElementById("peliculas");
+//llamado de la API de Marvel para optener peliculas 
+
+const url =  'http://gateway.marvel.com/v1/public/events?ts=1000&apikey=14f3749325a2fa38c9a5c8a9cade3e26&hash=d3c02d626f565d285a7726d2aca1c0e2';
+
+
+const marvel ={
+    render:()=>{
+        const urlAPI = url;
+        const container = document.querySelector('#peliculas');
+        let contentHTML = '';
+        let idPelicula=0;
+        fetch(urlAPI)
+        .then(res=> res.json())
+        .then((json)=>{
+            console.log(json.data.results);
+            const cantidadP= json.data.results.length;
+            contentHTML +=`
+                  <input type="hidden" id="cantidadP" value="${cantidadP}">
+                `;
+            for (const hero of json.data.results){
+                let urlHero = hero.urls[0].url;
+                    contentHTML += `
+                <div class="col-md-2 mh-80  text-center mb-1 ${(hero.id !=116 && hero.id !=329)?"":"visually-hidden"}">
+                    <label>
+                        <input type="radio" name="nature" value="nature1" id="pelicula${idPelicula+1}">
+                        <img src="${hero.thumbnail.path}.${hero.thumbnail.extension}" alt="${hero.name}" class="img-thumbnail mx-auto d-block">
+                        <h6 class="title mb-0 mt-1">${hero.title}</h6>
+                        <a href="${urlHero}" target="_blank">
+                            <h6>Descripción</h6>
+                        </a>
+                    </label>
+                </div>
+
+                `
+                idPelicula ++;
+            }
+            container.innerHTML = contentHTML;
+        })
+    }
+}
+
+async function obtenerId(){
+    const response = await fetch(url)
+    return await response.json();
+}
+
+
+
+//------------------------------------------------------------------------------------------
 
 let h_home= document.getElementById("h_home");
 let h_pelicula= document.getElementById("h_pelicula");
 let h_tienda= document.getElementById("h_tienda");
 let h_cuenta= document.getElementById("h_cuenta");
+let h_boletos= document.getElementById("h_boletos");
 let titulo2= document.getElementById("titulo2");
+
+let agregarAsientos = document.getElementById("agregarAsientos");
+let quitarAsientos = document.getElementById("quitarAsientos");
+
 h_home.style.color ="white";
+h_home.style.background ="#0d6efd";
+h_home.style.width = "117px";
 
 class Pelicula{
     constructor(nombre, duracion, categoria, url){
@@ -67,14 +124,15 @@ class Comprador{
 let peliculasLista =[pelicula1, pelicula2, pelicula3];
 let comidaLista =[combo1, combo2, combo3, combo4, combo5, combo6, combo7, combo8, combo9, combo10];
 let continuar = document.getElementById("form")
-let peliculas = document.getElementById("peliculas");
 let usuario = document.getElementById("usuario");
 let opciones = document.getElementById("opciones");
 let siguiente = document.getElementById("continuar");
 let siguiente2 = document.getElementById("continuar2");
+let siguiente3 = document.getElementById("continuar3");
 let volver = document.getElementById("volver");
 let volver2 = document.getElementById("volver2");
 let volver3 = document.getElementById("volver3");
+let volver4 = document.getElementById("volver4");
 let pagarBoton = document.getElementById("pagar");
 let comidaText = document.getElementById("comida");
 let titulo = document.getElementById("titulo");
@@ -87,16 +145,20 @@ let pagar=[];
 
 siguiente.classList.add("visually-hidden");
 siguiente2.classList.add("visually-hidden");
+siguiente3.classList.add("visually-hidden");
 pagarBoton.classList.add("visually-hidden");
 volver.classList.add("visually-hidden");
 volver2.classList.add("visually-hidden");
 volver3.classList.add("visually-hidden");
+volver4.classList.add("visually-hidden");
 opciones.classList.add("visually-hidden");
 comidaText.classList.add("visually-hidden");
+agregarAsientos.classList.add("visually-hidden");
+quitarAsientos.classList.add("visually-hidden");
 
     comidaLista.forEach((com, indice) =>{
         comidaText.innerHTML+=`
-            <div class="card mb-3" id="combo${indice}"style="width: 12rem; height:14rem;">
+            <div class="card mb-3 ms-2 me-2" id="combo${indice}"style="width: 12rem; height:13.7rem;">
                 <img src="${com.url}" class="card-img-top" alt="..."style="width: 6rem; height:30%;">
                 <div class="card-body text-black">
                 <h5 class="card-title ">${com.nombre}</h5>
@@ -113,125 +175,122 @@ comidaText.classList.add("visually-hidden");
 continuar.addEventListener('submit', (e)=>{
     h_pelicula.style.color ="white";
     h_home.style.color ="#0d6efd";
+    h_home.style.background ="#212529";
+    h_pelicula.style.background ="#0d6efd";
+    h_home.style.width = "90px";
+    h_pelicula.style.width = "117px";
     e.preventDefault();
     
-    opciones.classList.remove("visually-hidden");
     persona = new Comprador(
         document.getElementById("identificacion").value,
         document.getElementById("nombre").value,
         document.getElementById("telefono").value
     );
-    titulo.innerHTML = `<h3 class="text-end me-5">${persona.nombre}</h3>`;
+    titulo.innerHTML = `<h5 class="nombre" style="color:#0d6efd">${persona.nombre}</h5>`;
     usuario.classList.add("visually-hidden");
-        peliculas.innerHTML = ``;
-        peliculas.innerHTML += `
-        <div class="col mb-3">
-                    <div id="carouselExampleCaptions" class="col-8 carousel slide " data-bs-ride="carousel" style="margin: auto;">
-                        <div class="carousel-indicators">
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        </div>
-                        <div class="carousel-inner">
-                          <div class="carousel-item active" data-bs-interval="4000"  data-bs-ride="carousel">
-                            <img src="${pelicula1.url}"class="d-block imagen" alt="..." style="height:210px; width:350px;">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                          </div>
-                          <div class="carousel-item" data-bs-interval="4000">
-                            <img src="${pelicula2.url}"class="d-block imagen" alt="..." style="height:210px; width:350px;">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                          </div>
-                          <div class="carousel-item" data-bs-interval="4000">
-                            <img src="${pelicula3.url}" class="d-block imagen" alt="..." style="height:210px; width:350px;">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                          </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next" id="iniciar">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-                </div>
-                <hr>
-                <br>
-       `;
     let pelicula1a = !!document.getElementById("pelicula1");
+    let opcionesP = !!document.getElementById("opcionesP");
     if(!pelicula1a){
+        marvel.render();
+    }
+    if(!opcionesP){
         opciones.innerHTML+=`
-                <div class="col-5 order-1">
-                    <h4 class="mb-3 ">Escoja su pelicula favorita</h4>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pelicula1" value="option1">
-                        <label class="form-check-label" for="inlineRadio1">Steve Jobs</label>
-                    </div>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pelicula2" value="option2">
-                        <label class="form-check-label" for="inlineRadio2">Red Social</label>
-                    </div>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pelicula3" value="option3">
-                        <label class="form-check-label" for="inlineRadio3">Matrix</label>
-                    </div>
-                    <h4 class="mb-3">Escoja su tipo de entrada</h4>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="tipo1" value="option1">
-                        <label class="form-check-label" for="inlineRadio1">ECONOMICO -$50.000</label>
-                    </div>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="tipo2" value="option2">
-                        <label class="form-check-label" for="inlineRadio2">NORMAL -$70.000</label>
-                    </div>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="tipo3" value="option3">
-                        <label class="form-check-label" for="inlineRadio3">VIP -$100.000</label>
-                    </div>
+            <h4 class="mb-5 ms-5">Escoja su tipo de entrada</h4>
+            <div class="col d-flex justify-content-around order-1 ms-5"id="opcionesP"> 
+                <div class="col-md-3">
+                    <label>
+                    <input  type="radio" name="inlineRadioOptions2" id="tipo1" value="option1">
+                    <img src="https://media.istockphoto.com/vectors/silver-ticket-vector-illustration-vector-id1053230998"class="img-thumbnail2 mb-3" alt="">
+                    <h4>ECONOMICO -$50.000</h4>
+                    </label>
                 </div>
+                <div class="col-md-3">
+                    <label>
+                        <input  type="radio" name="inlineRadioOptions2" id="tipo2" value="option2">
+                        <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/golden-ticket-event-invitation-design-template-aaf3471dcd491c0cb4fce745c74ec490_screen.jpg?ts=1581536573"class="img-thumbnail2 mb-3" alt="">
+                        <h4>NORMAL -$70.000</h4>
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        <input type="radio" name="inlineRadioOptions2" id="tipo3" value="option3">
+                        <img src="https://png.pngtree.com/element_our/png/20181114/vip-guest-luxury-png_238966.jpg"class="img-thumbnail2 mb-3" alt="">
+                        <h4>VIP -$100.000</h4>
+                    </label>
+                </div>
+            </div>
         `
     }
-    siguiente.classList.remove("visually-hidden");
-    volver.classList.remove("visually-hidden");
     peliculas.classList.remove("visually-hidden");
+    setTimeout(() =>{siguiente.classList.remove("visually-hidden");
+    volver.classList.remove("visually-hidden");}, 800);
     
 })
 
 
 let pelicula =0,tipo=0;
 let cantidad, cantidadCombo;
-let alerta=document.getElementById("alerta");
+let alerta = document.getElementById("alerta");
+let alerta2 = document.getElementById("alerta2");
 let vPelicula, vTipo;
 let lista=[];
 
 siguiente.addEventListener('click',() =>{
+
+    vPelicula= validarPelicula();
+    // vTipo = validarTipo();
+    if( vPelicula ){
+        h_pelicula.style.color ="#0d6efd";
+        h_boletos.style.color ="white";
+        h_pelicula.style.background ="#212529";
+        h_boletos.style.background ="#0d6efd";
+        h_pelicula.style.width = "90px";
+        h_boletos.style.width = "117px";
+        opciones.classList.remove("visually-hidden");
+        siguiente3.classList.remove("visually-hidden");
+        volver4.classList.remove("visually-hidden");
+        agregarAsientos.classList.remove("visually-hidden");
+        quitarAsientos.classList.remove("visually-hidden");
+        peliculas.classList.add("visually-hidden");
+        volver.classList.add("visually-hidden");
+        siguiente.classList.add("visually-hidden");
+        siguiente2.classList.add("visually-hidden");
+        tipoPelicula();
+    }else{
+        alerta.innerHTML=`<div class="alert alert-warning" role="alert"">Debe seleccionar una pelicula</div>`;
+        setTimeout(() =>{alerta.innerHTML=``;}, 3000);
+    }  
+});
+siguiente3.addEventListener('click',() =>{
     vPelicula= validarPelicula();
     vTipo = validarTipo();
-    if( vPelicula && vTipo ){
-        h_pelicula.style.color ="#0d6efd";
+    if( vTipo ){
+        h_boletos.style.color ="#0d6efd";
         h_tienda.style.color ="white";
+        h_boletos.style.background ="#212529";
+        h_tienda.style.background ="#0d6efd";
+        h_boletos.style.width = "90px";
+        h_tienda.style.width = "117px";
         cantidad = document.getElementById("cantidad").value;
-        tipoPelicula(vPelicula);
         tipoBoletas(vTipo);
         opciones.classList.add("visually-hidden");
 
         volver2.classList.remove("visually-hidden");
         comidaText.classList.remove("visually-hidden");
         peliculas.classList.add("visually-hidden");
-        volver.classList.add("visually-hidden");
+        volver4.classList.add("visually-hidden");
+        siguiente3.classList.add("visually-hidden");
+        agregarAsientos.classList.add("visually-hidden");
+        quitarAsientos.classList.add("visually-hidden");
         comida();
     }else{
-        alerta.innerHTML=`<div class="alert alert-warning" role="alert"">Debe Ingresar todos los campos</div>`;
-        setTimeout(() =>{alerta.innerHTML=``;}, 3000);
+        alerta2.innerHTML=`<div class="alert alert-warning negativo2" role="alert"">Debe seleccionar un tipo de boleta</div>`;
+        setTimeout(() =>{alerta2.innerHTML=``;}, 3000);
     }  
 });
-
 function validarPelicula(){
-    for(let i =1; i<4; i++){
+    let cantidadPeliculas = document.getElementById("cantidadP").value;
+    for(let i =1; i<=cantidadPeliculas; i++){
         pelicula=document.getElementById(`pelicula${i}`);
         if(pelicula.checked){
             return i;
@@ -248,32 +307,28 @@ function validarTipo(){
 }
 
 
-function tipoPelicula(valor){
-    switch(valor){
-        case 1:
-            lista[0]=(pelicula1.nombre);
-            break;
-        case 2:
-            lista[0]=(pelicula2.nombre);
-            break;
-        case 3:
-            lista[0]=(pelicula3.nombre);
-            break;
-    }
+function tipoPelicula(){
+    obtenerId().then((json)=>{
+        lista[0]=json.data.results[validarPelicula()-1].title;
+    })
 }
-
+let margenTipo;
 function tipoBoletas(valor){
+    let margen = document.getElementById("margen");
     switch(valor){
         case 1:
             lista[1]=("Economico");
+            margenTipo=1;
             pagar[0]=50000*cantidad;
             break;
         case 2:
             lista[1]=("Normal");
+            margenTipo=2;
             pagar[0]=70000*cantidad;
             break;
         case 3:
             lista[1]=("VIP");
+            margenTipo=3;
             pagar[0]=100000*cantidad;
             break;
     }
@@ -281,7 +336,6 @@ function tipoBoletas(valor){
 
 
 function comida(){
-    siguiente.classList.add("visually-hidden");
     siguiente2.classList.remove("visually-hidden");
     comidaText.classList.remove("visually-hidden");
 }
@@ -483,6 +537,10 @@ botonesQuitar.forEach((boton, indice) => {
 siguiente2.addEventListener('click',()=>{
     h_cuenta.style.color ="white";
     h_tienda.style.color ="#0d6efd";
+    h_tienda.style.background ="#212529";
+    h_cuenta.style.background ="#0d6efd";
+    h_tienda.style.width = "90px";
+    h_cuenta.style.width = "117px";
     siguiente2.classList.add("visually-hidden");
     comidaText.classList.add("visually-hidden");
     titulo2.classList.add("visually-hidden");
@@ -525,46 +583,59 @@ function recibo(){
     reciboText.innerHTML+=`
     <h3 class="text-center">Señ@r ${persona.nombre} identificad@ con el numero ${persona.id}</h3>
     <h3 class="text-start ms-3">Ha seleccionado:</h3>
-    <h5 class="text-start ms-5">La pelicula ${lista[0]}</h5>
-    <h5 class="text-start cuenta1 ms-5">${cantidad}- -  boletos de tipo ${lista[1]}:<span>  $${pagar[0]}</span></h5>
+    <h5 class="text-start " style="margin-left:350px">La pelicula ${lista[0]}</h5>
+    <h5 class="text-start cuenta1 " style="margin-left:350px" id="margen">${cantidad}- -  boletos de tipo ${lista[1]}:<span>  $${pagar[0]}</span></h5>
     `;
+    if(margenTipo==1){
+        margen.classList.remove("cuenta1");
+        margen.classList.remove("cuenta1b");
+        margen.classList.add("cuenta1a");
+    }else if(margenTipo==3){
+        margen.classList.remove("cuenta1");
+        margen.classList.remove("cuenta1a");
+        margen.classList.add("cuenta1b");
+    }else if(margenTipo==2){
+        margen.classList.remove("cuenta1b");
+        margen.classList.remove("cuenta1a");
+        margen.classList.add("cuenta1");
+    }
     //uso operadores tenarios
     reciboText.innerHTML+= cantidadTipo1.cantidad>0?`
-    <h5 class="text-start cuenta2  ms-5">${cantidadTipo1.cantidad}- -  ${combo1.nombre}:<span>  $${pagar[1]}</span></h5>
+    <h5 class="text-start cuenta2  " style="margin-left:350px">${cantidadTipo1.cantidad}- -  ${combo1.nombre}:<span>  $${pagar[1]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo2.cantidad>0?`
-    <h5 class="text-start cuenta3  ms-5">${cantidadTipo2.cantidad}- -  ${combo2.nombre}:<span>  $${pagar[2]}</span></h5>
+    <h5 class="text-start cuenta3  " style="margin-left:350px">${cantidadTipo2.cantidad}- -  ${combo2.nombre}:<span>  $${pagar[2]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo3.cantidad>0?`
-    <h5 class="text-start cuenta3  ms-5">${cantidadTipo3.cantidad}- -  ${combo3.nombre}:<span>  $${pagar[3]}</span></h5>
+    <h5 class="text-start cuenta3  " style="margin-left:350px">${cantidadTipo3.cantidad}- -  ${combo3.nombre}:<span>  $${pagar[3]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo4.cantidad>0?`
-    <h5 class="text-start cuenta4  ms-5">${cantidadTipo4.cantidad}- -  ${combo4.nombre}:<span>  $${pagar[4]}</span></h5>
+    <h5 class="text-start cuenta4  " style="margin-left:350px">${cantidadTipo4.cantidad}- -  ${combo4.nombre}:<span>  $${pagar[4]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo5.cantidad>0?`
-    <h5 class="text-start cuenta4  ms-5">${cantidadTipo5.cantidad}- -  ${combo5.nombre}:<span>  $${pagar[5]}</span></h5>
+    <h5 class="text-start cuenta4  " style="margin-left:350px">${cantidadTipo5.cantidad}- -  ${combo5.nombre}:<span>  $${pagar[5]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo6.cantidad>0?`
-    <h5 class="text-start cuenta4 ms-5">${cantidadTipo6.cantidad}- -  ${combo6.nombre}:<span>  $${pagar[6]}</span></h5>
+    <h5 class="text-start cuenta4 " style="margin-left:350px">${cantidadTipo6.cantidad}- -  ${combo6.nombre}:<span>  $${pagar[6]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo7.cantidad>0?`
-    <h5 class="text-start cuenta5  ms-5">${cantidadTipo7.cantidad}- -  ${combo7.nombre}:<span>  $${pagar[7]}</span></h5>
+    <h5 class="text-start cuenta5  " style="margin-left:350px">${cantidadTipo7.cantidad}- -  ${combo7.nombre}:<span>  $${pagar[7]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo8.cantidad>0?`
-    <h5 class="text-start cuenta5  ms-5">${cantidadTipo8.cantidad}- -  ${combo8.nombre}:<span>  $${pagar[8]}</span></h5>
+    <h5 class="text-start cuenta5  " style="margin-left:350px">${cantidadTipo8.cantidad}- -  ${combo8.nombre}:<span>  $${pagar[8]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo9.cantidad>0?`
-    <h5 class="text-start cuenta6  ms-5">${cantidadTipo9.cantidad}- -  ${combo9.nombre}:<span>  $${pagar[9]}</span></h5>
+    <h5 class="text-start cuenta6  " style="margin-left:350px">${cantidadTipo9.cantidad}- -  ${combo9.nombre}:<span>  $${pagar[9]}</span></h5>
     `:``;
     reciboText.innerHTML+=cantidadTipo10.cantidad>0?`
-    <h5 class="text-start cuenta7  ms-5">${cantidadTipo10.cantidad}- -  ${combo10.nombre}:<span>  $${pagar[10]}</span></h5>
+    <h5 class="text-start cuenta7  " style="margin-left:350px">${cantidadTipo10.cantidad}- -  ${combo10.nombre}:<span>  $${pagar[10]}</span></h5>
     `:``;
     pagar.forEach(valor=>{
         valorTotal += valor;
     });
     totalText.innerHTML+= `
         <hr>
-        <h3 class="text-start cuenta7 ms-5">Total a pagar:<span>$${valorTotal}</span></h3>`;
+        <h3 class="text-start cuenta7 ms-3">Total a pagar:<span style="margin-left:555px">$${valorTotal}</span></h3>`;
 }
 
 volver3.addEventListener('click',()=>{
@@ -576,6 +647,10 @@ volver3.addEventListener('click',()=>{
     valorTotal=0;
     h_cuenta.style.color ="#0d6efd";
     h_tienda.style.color ="white";
+    h_cuenta.style.background ="#212529";
+    h_tienda.style.background ="#0d6efd";
+    h_cuenta.style.width = "90px";
+    h_tienda.style.width = "117px";
     siguiente2.classList.remove("visually-hidden");
     pagarBoton.classList.add("visually-hidden");
     comidaText.classList.remove("visually-hidden");
@@ -583,21 +658,47 @@ volver3.addEventListener('click',()=>{
     volver2.classList.remove("visually-hidden");
     volver3.classList.add("visually-hidden");
 })
-volver2.addEventListener('click',()=>{
+volver4.addEventListener('click',()=>{
     h_pelicula.style.color ="white";
+    h_boletos.style.color ="#0d6efd";
+    h_boletos.style.background ="#212529";
+    h_pelicula.style.background ="#0d6efd";
+    h_boletos.style.width = "90px";
+    h_pelicula.style.width = "117px";
+    siguiente.classList.remove("visually-hidden");
+    peliculas.classList.remove("visually-hidden");
+    volver.classList.remove("visually-hidden");
+    opciones.classList.add("visually-hidden");
+    siguiente3.classList.add("visually-hidden");
+    volver4.classList.add("visually-hidden");
+    agregarAsientos.classList.add("visually-hidden");
+    quitarAsientos.classList.add("visually-hidden");
+})
+
+volver2.addEventListener('click',()=>{
+    h_boletos.style.color ="white";
     h_tienda.style.color ="#0d6efd";
+    h_tienda.style.background ="#212529";
+    h_boletos.style.background ="#0d6efd";
+    h_tienda.style.width = "90px";
+    h_boletos.style.width = "117px";
     siguiente2.classList.add("visually-hidden");
     comidaText.classList.add("visually-hidden");
     volver2.classList.add("visually-hidden");
     opciones.classList.remove("visually-hidden");
-    siguiente.classList.remove("visually-hidden");
-    peliculas.classList.remove("visually-hidden");
-    volver.classList.remove("visually-hidden");
+    siguiente3.classList.remove("visually-hidden");
+    volver4.classList.remove("visually-hidden");
+    agregarAsientos.classList.remove("visually-hidden");
+    quitarAsientos.classList.remove("visually-hidden");
 })
 
 volver.addEventListener('click',()=>{
     h_pelicula.style.color ="#0d6efd";
     h_home.style.color ="white";
+    h_pelicula.style.background ="#212529";
+    h_home.style.background ="#0d6efd";
+    h_pelicula.style.width = "90px";
+    h_home.style.width = "117px";
     opciones.classList.add("visually-hidden");
     siguiente.classList.add("visually-hidden");
     peliculas.classList.add("visually-hidden");
@@ -606,5 +707,35 @@ volver.addEventListener('click',()=>{
 })
 
 pagarBoton.addEventListener('click',()=>{
-    swal("Gracias por su compra!", "Podras reclamar tu pedido con el numero de identificación en nuestros puntos fisicos", "success");
+    swal({
+        title: "¿Esta seguro de realizar la compra?",
+        text: "Una vez aceptado, no podrá cancelar la compra",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Gracias por su compra!", "Podras reclamar tu pedido con el numero de identificación en nuestros puntos fisicos", {
+            icon: "success",
+          });
+        } else {
+          swal("Compra cancelada", {
+            icon: "error",
+          });
+        }
+      });
+})
+
+
+agregarAsientos.addEventListener('click',()=>{
+    cantidad= document.getElementById("cantidad");
+    cantidad.value = `${parseInt(cantidad.value) + 1}`;
+})
+
+quitarAsientos.addEventListener('click',()=>{
+    cantidad= document.getElementById("cantidad");
+    if(cantidad.value>=2){
+        cantidad.value = `${parseInt(cantidad.value) - 1}`;
+    }
 })

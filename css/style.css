@@ -1,5 +1,6 @@
 body{
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 .contenedor{
     background-color: black;
@@ -124,8 +125,49 @@ img.asiento{
     border-width: 3px;
 }
 .negativo{
-    margin-top: -20px;
+    margin-top: -6px;
 }
 .negativo2{
     margin-top: -85px;
+}
+.negativo3{
+    margin-top: -72px;
+}
+
+
+.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
+    background-color: rgba(8, 31, 73, 0.45)!important;
+}
+.formulario{
+    width: 350px;
+    padding: 60px;
+    border: 2px solid white; 
+    border-radius: 8px;
+}
+
+.icono-carrito{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.carrito{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: bold;
+    background:#fff;
+    width:26px;
+    height: 26px;
+    border:2px solid ;
+    border-radius: 12px;
+    border-color: aqua;
+}
+
+.swal2-popup.swal2-modal.swal2-show{
+    width:350px;
+    padding-top: 10px;
+    margin-left: 7%;
 }

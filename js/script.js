@@ -15,7 +15,6 @@ const marvel ={
         fetch(urlAPI)
         .then(res=> res.json())
         .then((json)=>{
-            console.log(json.data.results);
             const cantidadP= json.data.results.length;
             contentHTML +=`
                   <input type="hidden" id="cantidadP" value="${cantidadP}">
@@ -137,6 +136,8 @@ let pagarBoton = document.getElementById("pagar");
 let comidaText = document.getElementById("comida");
 let titulo = document.getElementById("titulo");
 let iniciar = document.getElementById("iniciar");
+let carrito = document.getElementById("carrito");
+let mostrarCarrito = document.getElementById("mostrarCarrito");
 let persona,cantidad1;
 let botonesAgregar=[];
 let botonesQuitar=[];
@@ -173,14 +174,13 @@ quitarAsientos.classList.add("visually-hidden");
 
 
 continuar.addEventListener('submit', (e)=>{
+    e.preventDefault();
     h_pelicula.style.color ="white";
     h_home.style.color ="#0d6efd";
     h_home.style.background ="#212529";
     h_pelicula.style.background ="#0d6efd";
     h_home.style.width = "90px";
     h_pelicula.style.width = "117px";
-    e.preventDefault();
-    
     persona = new Comprador(
         document.getElementById("identificacion").value,
         document.getElementById("nombre").value,
@@ -192,6 +192,11 @@ continuar.addEventListener('submit', (e)=>{
     let opcionesP = !!document.getElementById("opcionesP");
     if(!pelicula1a){
         marvel.render();
+        setTimeout(() =>{siguiente.classList.remove("visually-hidden");
+            volver.classList.remove("visually-hidden");},1000);
+    }else{
+        siguiente.classList.remove("visually-hidden");
+        volver.classList.remove("visually-hidden");
     }
     if(!opcionesP){
         opciones.innerHTML+=`
@@ -222,8 +227,6 @@ continuar.addEventListener('submit', (e)=>{
         `
     }
     peliculas.classList.remove("visually-hidden");
-    setTimeout(() =>{siguiente.classList.remove("visually-hidden");
-    volver.classList.remove("visually-hidden");}, 800);
     
 })
 
@@ -257,8 +260,8 @@ siguiente.addEventListener('click',() =>{
         siguiente2.classList.add("visually-hidden");
         tipoPelicula();
     }else{
-        alerta.innerHTML=`<div class="alert alert-warning" role="alert"">Debe seleccionar una pelicula</div>`;
-        setTimeout(() =>{alerta.innerHTML=``;}, 3000);
+        alerta.innerHTML=`<div class="alert alert-warning negativo3" role="alert"">Debe seleccionar una pelicula</div>`;
+        setTimeout(() =>{alerta.innerHTML=``;}, 2000);
     }  
 });
 siguiente3.addEventListener('click',() =>{
@@ -285,7 +288,7 @@ siguiente3.addEventListener('click',() =>{
         comida();
     }else{
         alerta2.innerHTML=`<div class="alert alert-warning negativo2" role="alert"">Debe seleccionar un tipo de boleta</div>`;
-        setTimeout(() =>{alerta2.innerHTML=``;}, 3000);
+        setTimeout(() =>{alerta2.innerHTML=``;}, 2000);
     }  
 });
 function validarPelicula(){
@@ -398,43 +401,43 @@ botonesAgregar.forEach((boton, indice) => {
         switch(indice+1){
             case 1:
                 cantidadTipo1.cantidad=contador;
-                mensaje=mensaje=cantidadTipo1.nombre;
+                mensaje=cantidadTipo1.nombre;
                 break;
             case 2:
                 cantidadTipo2.cantidad=contador;
-                mensaje=mensaje=cantidadTipo2.nombre;
+                mensaje=cantidadTipo2.nombre;
                 break;
             case 3:
                 cantidadTipo3.cantidad=contador;
-                mensaje=mensaje=cantidadTipo3.nombre;
+                mensaje=cantidadTipo3.nombre;
                 break;
             case 4:
                 cantidadTipo4.cantidad=contador;
-                mensaje=mensaje=cantidadTipo4.nombre;
+                mensaje=cantidadTipo4.nombre;
                 break;
             case 5:
                 cantidadTipo5.cantidad=contador;
-                mensaje=mensaje=cantidadTipo5.nombre;
+                mensaje=cantidadTipo5.nombre;
                 break;
             case 6:
                 cantidadTipo6.cantidad=contador;
-                mensaje=mensaje=cantidadTipo6.nombre;
+                mensaje=cantidadTipo6.nombre;
                 break;
             case 7:
                 cantidadTipo7.cantidad=contador;
-                mensaje=mensaje=cantidadTipo7.nombre;
+                mensaje=cantidadTipo7.nombre;
                 break;
             case 8:
                 cantidadTipo8.cantidad=contador;
-                mensaje=mensaje=cantidadTipo8.nombre;
+                mensaje=cantidadTipo8.nombre;
                 break;
             case 9:
                 cantidadTipo9.cantidad=contador;
-                mensaje=mensaje=cantidadTipo9.nombre;
+                mensaje=cantidadTipo9.nombre;
                 break;
             case 10:
                 cantidadTipo10.cantidad=contador;
-                mensaje=mensaje=cantidadTipo10.nombre;
+                mensaje=cantidadTipo10.nombre;
                 break;
         }
         arrayProductos=[cantidadTipo1, cantidadTipo2, cantidadTipo3, cantidadTipo4, cantidadTipo5, cantidadTipo6, cantidadTipo7, cantidadTipo8, cantidadTipo9, cantidadTipo10];
@@ -474,43 +477,43 @@ botonesQuitar.forEach((boton, indice) => {
                 switch(indice+1){
                     case 1:
                         cantidadTipo1.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo1.nombre;
+                        mensaje=cantidadTipo1.nombre;
                         break;
                     case 2:
                         cantidadTipo2.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo2.nombre;
+                        mensaje=cantidadTipo2.nombre;
                         break;
                     case 3:
                         cantidadTipo3.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo3.nombre;
+                        mensaje=cantidadTipo3.nombre;
                         break;
                     case 4:
                         cantidadTipo4.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo4.nombre;
+                        mensaje=cantidadTipo4.nombre;
                         break;
                     case 5:
                         cantidadTipo5.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo5.nombre;
+                        mensaje=cantidadTipo5.nombre;
                         break;
                     case 6:
                         cantidadTipo6.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo6.nombre;
+                        mensaje=cantidadTipo6.nombre;
                         break;
                     case 7:
                         cantidadTipo7.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo7.nombre;
+                        mensaje=cantidadTipo7.nombre;
                         break;
                     case 8:
                         cantidadTipo8.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo8.nombre;
+                        mensaje=cantidadTipo8.nombre;
                         break;
                     case 9:
                         cantidadTipo9.cantidad=contador-1;
-                        mensaje=mensaje=cantidadTipo9.nombre;
+                        mensaje=cantidadTipo9.nombre;
                         break;
                     case 10:
                     cantidadTipo10.cantidad=contador-1;
-                    mensaje=mensaje=cantidadTipo10.nombre;
+                    mensaje=cantidadTipo10.nombre;
                     break;
                 }
                 arrayProductos=[cantidadTipo1, cantidadTipo2, cantidadTipo3, cantidadTipo4, cantidadTipo5, cantidadTipo6, cantidadTipo7, cantidadTipo8, cantidadTipo9, cantidadTipo10];
@@ -574,9 +577,7 @@ let valorTotal= 0;
 
 
 function recibo(){
-    //Ordena los numeros del array
-    
-    
+    //Ordena los numeros del array  
     siguiente.classList.add("visually-hidden");
     peliculas.classList.add("visually-hidden");
     reciboText.innerHTML=`<h2 class="text-center">Recibo de Pago</h2>`;
@@ -707,24 +708,31 @@ volver.addEventListener('click',()=>{
 })
 
 pagarBoton.addEventListener('click',()=>{
-    swal({
-        title: "¿Esta seguro de realizar la compra?",
-        text: "Una vez aceptado, no podrá cancelar la compra",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          swal("Gracias por su compra!", "Podras reclamar tu pedido con el numero de identificación en nuestros puntos fisicos", {
-            icon: "success",
-          });
-        } else {
-          swal("Compra cancelada", {
-            icon: "error",
-          });
+    Swal.fire({
+        title: '¿Esta seguro de realizar la compra?',
+        text: "Una vez aceptado, no podrá cancelar la compra!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Comprar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title:'Gracias por su compra!',
+            icon:'success',
+            text:'Podrá reclamar su pedido con el numero de identificación en nuestros puntos fisicos.',
+            confirmButtonText: 'Aceptar'
+          })
+        }else{
+            Swal.fire({
+                title:'Compra cancelada!',
+                icon:'error',
+                confirmButtonText: 'Aceptar'
+            }) 
         }
-      });
+      })
 })
 
 
@@ -738,4 +746,63 @@ quitarAsientos.addEventListener('click',()=>{
     if(cantidad.value>=2){
         cantidad.value = `${parseInt(cantidad.value) - 1}`;
     }
+})
+
+setInterval(() => {
+    let cantidadCarrito=0;
+    if(localStorage.getItem('ProductosTipo')){
+        let productosDeStorage = JSON.parse(localStorage.getItem('ProductosTipo'));//.parse para tomar los datos del loacalstorage
+        productosDeStorage.forEach((producto,indice) =>{
+            let {cantidad:pCantidad}=producto; //Desestructuracion 
+            switch(indice+1){
+                case 1:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 2:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 3:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 4:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 5:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 6:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 7:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 8:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 9:
+                    cantidadCarrito+=pCantidad;
+                    break;
+                case 10:
+                    cantidadCarrito+=pCantidad;
+                    break;
+            }
+        })
+        carrito.innerHTML =`${cantidadCarrito}`;
+    }
+},100);
+
+mostrarCarrito.addEventListener('click',()=>{
+    let cantidadCarrito=``;
+    cantidadCarrito+=`<h1>Carrito Comida</h1>`;
+    if(localStorage.getItem('ProductosTipo')){
+        let productosDeStorage = JSON.parse(localStorage.getItem('ProductosTipo'));//.parse para tomar los datos del loacalstorage
+        productosDeStorage.forEach((producto,indice) =>{
+            let {cantidad, nombre}=producto; //Desestructuracion 
+            cantidadCarrito+=`<h6 class="text-start ms-5"><strong>${cantidad}</strong>- ${nombre}</h6>`;
+        })
+    }
+    Swal.fire({
+        html: cantidadCarrito,
+        confirmButtonText: 'Aceptar',
+      });
 })

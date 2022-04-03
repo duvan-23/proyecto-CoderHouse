@@ -79,12 +79,14 @@ img.img-thumbnail2{
     margin-right: 36px;
     padding-top: 1px;
 }
-img.asiento{
-    width: 300px;
+.asiento{
+    border:1px solid  aqua;
     height: 180px;
-    position:absolute;
     left: 578px;
     border-radius: 15px;
+    background-image: url("https://www.irishtimes.com/polopoly_fs/1.3445043.1522359625!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .entradas{
@@ -94,14 +96,14 @@ img.asiento{
     border-radius: 7px;
 }
 .quitar_asientos{
-    margin-left: 364px;
-    margin-top: -90px;
+    margin-left: 44%;
+    margin-top: -37%;
     border-color: red;
     border-radius: 10px;
 }
 .agregar_asientos{
-    margin-left: 136px;
-    margin-top: -90px;
+    margin-left: 41%;
+    margin-top: -37%;
     border-color:aqua;
     border-radius: 10px;
 }
@@ -151,6 +153,10 @@ img.asiento{
     text-align: center;
 }
 
+.icon-carrito-h:hover{
+    border: 2px solid;
+    border-color: aqua;
+}
 .carrito{
     position: absolute;
     top: 70%;
@@ -168,6 +174,35 @@ img.asiento{
 
 .swal2-popup.swal2-modal.swal2-show{
     width:350px;
-    padding-top: 10px;
+    padding-top: 1s0px;
     margin-left: 7%;
+}
+#tooltip {
+    background: blue;
+    color: white;
+    font-weight: bold;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+    margin-left:7px!important;
+  }
+
+  #arrow,
+#arrow::before {
+  position: absolute;
+  width: 10px;
+  height: 8px;
+  background: inherit;
+}
+
+#arrow {
+  visibility: hidden;
+  margin-left: -12px;
+  margin-bottom: -20px!important;
+}
+
+#arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
 }
